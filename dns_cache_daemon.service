@@ -1,0 +1,12 @@
+[Unit]
+Description=Local DNS Cache Daemon
+After=network.target
+
+[Service]
+ExecStart=/path/to/LocalDNSCacheDaemon
+Restart=always
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target
