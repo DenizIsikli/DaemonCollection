@@ -25,7 +25,7 @@ struct CacheEntry {
     time_t ttlExpiry;
 };
 
-void logMessage(const string& message) {
+void logMessage(const string &message) {
     ofstream logFile("./dns_cache_daemon.log", ios_base::app);
     if (logFile.is_open()) {
         logFile << time(NULL) << ": " << message << endl;
