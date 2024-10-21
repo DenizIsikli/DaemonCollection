@@ -1,5 +1,5 @@
-# LocalDNSCacheDaemon Setup Guide
-This guide will help you set up and run the `LocalDNSCacheDaemon` on your system.
+# Daemon of Your Choice Setup Guide
+This guide will help you set up and run the daemon of your choice on your system.
 
 ## Prerequisites
 
@@ -15,39 +15,53 @@ sudo apt update
 sudo apt install g++ systemd
 ```
 
-## Step 1: Clone the repository
+## Step 1: Clone the Repository
+
+1. Clone the repository using HTTPS or SSH
 
 ```bash
-git clone https://github.com/DenizIsikli/LocalDNSCacheDaemon.git -- HTTPS
-git clone git@github.com:DenizIsikli/LocalDNSCacheDaemon.git -- SSH
-cd LocalDNSCacheDaemon
+git clone https://github.com/YourUsername/daemoncollection.git -- HTTPS
+git clone git@github.com:YourUsername/daemoncollection.git -- SSH
 ```
+2. Navigate to the repository
+
+```bash
+cd daemoncollection/ProjectFolder
+```
+
+Replace `ProjectFolder` with the folder of the daemon you want to set up
 
 ## Step 2: Compile the Daemon
 
+1. Compile the daemon using g++
+
 ```bash
-g++ -o LocalDNSCacheDaemon LocalDNSCacheDaemon.cpp
+g++ -o ProjectFolder ProjectFolder.cpp
 ```
+
+Replace `ProjectFolder` with the name of your chosen project
 
 ## Step 3: Create a Systemd Service
 
-To run the daemon as a background service, create a sytemd service file.
+To run the daemon as a background service, you need to create a systemd service file
 
-1. Open a new service file using a text editor:
+1. Open a new service file using a text editor
 
 ```bash
-sudo nano /etc/systemd/system/LocalDNSCacheDaemon.service
+sudo nano /etc/systemd/system/ProjectFolder.service
 ```
 
-2. Copy and paste the following content into the file:
+Replace `ProjectFolder` with the name of your chosen project
 
-```ini
+2. Copy and paste the following content into the file
+
+```bash
 [Unit]
-Description=Local DNS Cache Daemon
+Description=ProjectFolder Daemon
 After=network.target
 
 [Service]
-ExecStart=/path/to/LocalDNSCacheDaemon
+ExecStart=/path/to/daemoncollection/ProjectFolder/ProjectFolder
 Restart=always
 User=root
 Group=root
@@ -56,40 +70,46 @@ Group=root
 WantedBy=multi-user.target
 ```
 
-**Important:** Replace `/path/to/LocalDNSCacheDaemon` with the absolute path to the compiled daemon executable in your project folder.
+**Important:** Replace `/path/to/daemoncollection/ProjectFolder/ProjectFolder` with the absolute path to the compiled daemon executable
 
-3. Save and close the file.
+3. Save and exit the text editor
 
-## Step 4: Reload Systemd and Start the Service
+## Step 4: Reload Systemd and Start the Daemon
 
-Reload systemd to register the new service
+1. Reload systemd to register the new service
 
 ```bash
 sudo systemctl daemon-reload
 ```
 
-Start the service
+2. Start the daemon service
 
 ```bash
-sudo systemctl start LocalDNSCacheDaemon
+sudo systemctl start ProjectFolder
 ```
 
-Enable the service to start on boot
+3. Enable the daemon to start on boot
 
 ```bash
-sudo systemctl enable LocalDNSCacheDaemon
+sudo systemctl enable ProjectFolder
 ```
+
+Replace `ProjectFolder` with the name of your chosen project
 
 ## Step 5: Stop or Restart the Daemon
 
-To stop the daemon:
+1. To stop the daemon
 
 ```bash
-sudo systemctl stop LocalDNSCacheDaemon
+sudo systemctl stop ProjectFolder
 ```
 
-To restart the daemon:
+2. To restart the daemon
 
 ```bash
-sudo systemctl restart LocalDNSCacheDaemon
+sudo systemctl restart ProjectFolder
 ```
+
+## Notes
+- `ProjectFolder` refers to the folder name of the daemon you want to set up
+- Customize the paths and project-specific details as needed for each daemon
