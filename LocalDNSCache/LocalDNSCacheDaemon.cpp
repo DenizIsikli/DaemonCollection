@@ -44,28 +44,24 @@ void signalHandler(int signal) {
 
 void daemonize() {
     pid_t pid = fork();
-    
     if (pid < 0) exit(EXIT_FAILURE);
     if (pid > 0) exit(EXIT_SUCCESS);
 
     if (setsid() < 0) exit(EXIT_FAILURE);
-    umask(0);
 
-    char projectDir[PATH_MAX];
-    if (getcwd(projectDir, sizeof(projectDir)) != nullptr) {
-        if (chdir(projectDir) < 0) {
-            exit(EXIT_FAILURE);
-        }
-    } else {
-        exit(EXIT_FAILURE);
-    }
+    pid = fork();
+    if (pid < 0) exit(EXIT_FAILURE);
+    if (pid > 0) exit(EXIT_SUCCESS);
+
+    umask(0);
+    if (chdir("/") < 0) exit(EXIT_FAILURE);
+
+    for (int fd = sysconf(_SC_OPEN_MAX); fd >= 0; fd--) close(fd);
 
     int devNull = open("/dev/null", O_RDWR);
     dup2(devNull, STDIN_FILENO);
     dup2(devNull, STDOUT_FILENO);
     dup2(devNull, STDERR_FILENO);
-
-    close(devNull);
 }
 
 unordered_map<string, CacheEntry> dnsCache;
